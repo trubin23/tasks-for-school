@@ -1,13 +1,15 @@
-package ru.trubin23.tasksforschool;
+package ru.trubin23.tasksforschool.tasks;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import ru.trubin23.tasksforschool.R;
+
+public class TasksActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.tasks_act);
     }
 }
