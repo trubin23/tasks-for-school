@@ -1,5 +1,7 @@
 package ru.trubin23.tasksforschool.addedittask;
 
+import android.support.annotation.NonNull;
+
 import ru.trubin23.tasksforschool.BasePresenter;
 import ru.trubin23.tasksforschool.BaseView;
 
@@ -10,7 +12,9 @@ import ru.trubin23.tasksforschool.BaseView;
 public interface AddEditTaskContract {
 
     interface View extends BaseView<Presenter> {
+        void setTitle(@NonNull String title);
 
+        void setDescription(@NonNull String description);
     }
 
     interface Presenter extends BasePresenter {
