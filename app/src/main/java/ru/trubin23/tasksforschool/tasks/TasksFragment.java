@@ -7,7 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.trubin23.tasksforschool.R;
 
@@ -18,6 +20,9 @@ import ru.trubin23.tasksforschool.R;
 public class TasksFragment extends Fragment implements TasksContract.View {
 
     private TasksContract.Presenter mPresenter;
+
+    @BindView(R.id.list_view)
+    ListView mListView;
 
     @Nullable
     @Override
