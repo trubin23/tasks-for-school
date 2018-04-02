@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -18,9 +19,11 @@ import ru.trubin23.tasksforschool.data.Task;
 class TasksAdapter extends BaseAdapter {
 
     private List<Task> mTasks;
+    private TaskItemListener mTaskItemListener;
 
-    public TasksAdapter(@NonNull List<Task> tasks) {
+    public TasksAdapter(@NonNull List<Task> tasks, @NonNull TaskItemListener taskItemListener) {
         mTasks = tasks;
+        mTaskItemListener = taskItemListener;
     }
 
     @Override
@@ -29,7 +32,7 @@ class TasksAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public Task getItem(int position) {
         return mTasks.get(position);
     }
 
@@ -46,7 +49,15 @@ class TasksAdapter extends BaseAdapter {
             rowView = inflater.inflate(R.layout.task_item, viewGroup, false);
         }
 
+        Task task = getItem(position);
 
+        TextView titleTV = rowView.findViewById(R.id.item_title);
+        titleTV.setText(task.getTitle());
+
+        TextView dateTV = rowView.findViewById(R.id.item_date);
+        titleTV.setText(task.getDateOfCreation());
+
+        mTaskItemListener.onTaskClick(task);
 
         return rowView;
     }

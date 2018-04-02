@@ -30,4 +30,12 @@ public class Task {
         mColor = color;
         mDateOfCreation = dateOfCreation;
     }
+
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public String getDateOfCreation() {
+        return mDateOfCreation;
+    }
 }

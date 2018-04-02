@@ -30,6 +30,9 @@ public class TasksFragment extends Fragment implements TasksContract.View {
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.tasks_frag, container, false);
         ButterKnife.bind(this, root);
+
+
+
         return root;
     }
 
