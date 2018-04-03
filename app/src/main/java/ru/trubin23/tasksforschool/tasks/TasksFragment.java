@@ -13,7 +13,7 @@ import android.widget.ListView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.trubin23.tasksforschool.R;
-import ru.trubin23.tasksforschool.addedittask.AddEditTaskActivity;
+import ru.trubin23.tasksforschool.taskdetail.TaskDetailActivity;
 import ru.trubin23.tasksforschool.data.Task;
 import ru.trubin23.tasksforschool.tasks.list.TaskItemListener;
 import ru.trubin23.tasksforschool.tasks.list.TasksAdapter;
@@ -57,8 +57,8 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     }
 
     private void showTaskDetail(@NonNull Task task){
-        Intent intent = new Intent(getContext(), AddEditTaskActivity.class);
-        intent.putExtra(AddEditTaskActivity.TASK_DETAILS, task);
+        Intent intent = new Intent(getContext(), TaskDetailActivity.class);
+        intent.putExtra(TaskDetailActivity.TASK_DETAILS, task);
         startActivity(intent);
     }
 }

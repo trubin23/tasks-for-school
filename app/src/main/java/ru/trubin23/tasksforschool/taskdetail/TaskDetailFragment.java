@@ -1,4 +1,4 @@
-package ru.trubin23.tasksforschool.addedittask;
+package ru.trubin23.tasksforschool.taskdetail;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,9 +17,9 @@ import ru.trubin23.tasksforschool.R;
  * Created by Andrey on 30.03.2018.
  */
 
-public class AddEditTaskFragment extends Fragment implements AddEditTaskContract.View {
+public class TaskDetailFragment extends Fragment implements TaskDetailContract.View {
 
-    private AddEditTaskContract.Presenter mPresenter;
+    private TaskDetailContract.Presenter mPresenter;
 
     @BindView(R.id.add_edit_task_title)
     EditText mTitle;
@@ -31,13 +31,13 @@ public class AddEditTaskFragment extends Fragment implements AddEditTaskContract
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.addedittask_frag, container, false);
+        View root = inflater.inflate(R.layout.taskdetail_frag, container, false);
         ButterKnife.bind(this, root);
         return root;
     }
 
     @Override
-    public void setPresenter(@NonNull AddEditTaskContract.Presenter presenter) {
+    public void setPresenter(@NonNull TaskDetailContract.Presenter presenter) {
         mPresenter = presenter;
     }
 

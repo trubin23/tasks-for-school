@@ -1,4 +1,4 @@
-package ru.trubin23.tasksforschool.addedittask;
+package ru.trubin23.tasksforschool.taskdetail;
 
 import android.support.annotation.NonNull;
 
@@ -9,7 +9,7 @@ import ru.trubin23.tasksforschool.BaseView;
  * Created by Andrey on 30.03.2018.
  */
 
-public interface AddEditTaskContract {
+public interface TaskDetailContract {
 
     interface View extends BaseView<Presenter> {
         void setTitle(@NonNull String title);

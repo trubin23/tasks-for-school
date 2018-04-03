@@ -1,4 +1,4 @@
-package ru.trubin23.tasksforschool.addedittask;
+package ru.trubin23.tasksforschool.taskdetail;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,23 +6,23 @@ import android.os.Bundle;
 import ru.trubin23.tasksforschool.R;
 import ru.trubin23.tasksforschool.util.ActivityUtils;
 
-public class AddEditTaskActivity extends AppCompatActivity {
+public class TaskDetailActivity extends AppCompatActivity {
 
     public static final String TASK_DETAILS = "TASK_DETAILS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.addedittask_act);
+        setContentView(R.layout.taskdetail_act);
 
-        AddEditTaskFragment fragment = (AddEditTaskFragment) getSupportFragmentManager()
+        TaskDetailFragment fragment = (TaskDetailFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.content_frame);
         if (fragment == null) {
-            fragment = new AddEditTaskFragment();
+            fragment = new TaskDetailFragment();
             ActivityUtils.addFragmentToActivity(
                     getSupportFragmentManager(), fragment, R.id.content_frame);
         }
 
-        new AddEditTaskPresenter(fragment);
+        new TaskDetailPresenter(fragment);
     }
 }

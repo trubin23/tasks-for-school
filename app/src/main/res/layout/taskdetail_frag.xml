@@ -14,6 +14,6 @@
         android:id="@+id/add_edit_task_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/title_description"/>
+        android:hint="@string/description_hint"/>
 
 </LinearLayout>
