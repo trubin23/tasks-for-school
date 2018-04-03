@@ -8,7 +8,7 @@ import ru.trubin23.tasksforschool.data.Task;
  * Created by Andrey on 02.04.2018.
  */
 
-interface TaskItemListener {
+public interface TaskItemListener {
 
     void onTaskClick(@NonNull Task task);
 }

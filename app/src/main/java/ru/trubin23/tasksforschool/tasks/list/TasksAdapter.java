@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.trubin23.tasksforschool.R;
@@ -16,13 +17,13 @@ import ru.trubin23.tasksforschool.data.Task;
  * Created by Andrey on 02.04.2018.
  */
 
-class TasksAdapter extends BaseAdapter {
+public class TasksAdapter extends BaseAdapter {
 
     private List<Task> mTasks;
     private TaskItemListener mTaskItemListener;
 
-    public TasksAdapter(@NonNull List<Task> tasks, @NonNull TaskItemListener taskItemListener) {
-        mTasks = tasks;
+    public TasksAdapter(@NonNull TaskItemListener taskItemListener) {
+        mTasks = new ArrayList<>();
         mTaskItemListener = taskItemListener;
     }
 
@@ -55,9 +56,9 @@ class TasksAdapter extends BaseAdapter {
         titleTV.setText(task.getTitle());
 
         TextView dateTV = rowView.findViewById(R.id.item_date);
-        titleTV.setText(task.getDateOfCreation());
+        dateTV.setText(task.getDateOfCreation());
 
-        mTaskItemListener.onTaskClick(task);
+        rowView.setOnClickListener(clickView -> mTaskItemListener.onTaskClick(task));
 
         return rowView;
     }

@@ -8,6 +8,8 @@ import ru.trubin23.tasksforschool.util.ActivityUtils;
 
 public class AddEditTaskActivity extends AppCompatActivity {
 
+    public static final String TASK_DETAILS = "TASK_DETAILS";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
