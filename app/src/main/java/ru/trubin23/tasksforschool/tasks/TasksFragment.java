@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,9 @@ public class TasksFragment extends Fragment implements TasksContract.View {
         View root = inflater.inflate(R.layout.tasks_frag, container, false);
         ButterKnife.bind(this, root);
 
+        FloatingActionButton fab = getActivity().findViewById(R.id.fab_add_task);
+        fab.setOnClickListener(v -> addTask());
+
         mListView.setAdapter(mTasksAdapter);
 
         return root;
@@ -56,9 +60,14 @@ public class TasksFragment extends Fragment implements TasksContract.View {
         mPresenter = presenter;
     }
 
-    private void showTaskDetail(@NonNull Task task){
+    private void showTaskDetail(@NonNull Task task) {
         Intent intent = new Intent(getContext(), TaskDetailActivity.class);
         intent.putExtra(TaskDetailActivity.TASK_DETAILS, task);
+        startActivity(intent);
+    }
+
+    private void addTask() {
+        Intent intent = new Intent(getContext(), TaskDetailActivity.class);
         startActivity(intent);
     }
 }
