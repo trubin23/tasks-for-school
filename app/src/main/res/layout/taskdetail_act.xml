@@ -3,12 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".taskdetail.TaskDetailActivity" >
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+    tools:context=".taskdetail.TaskDetailActivity">
+
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_save_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
