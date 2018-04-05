@@ -9,6 +9,8 @@ import ru.trubin23.tasksforschool.util.ActivityUtils;
 public class TaskDetailActivity extends AppCompatActivity {
 
     public static final String TASK_DETAILS = "TASK_DETAILS";
+    public static final int CHANGE_TASK = 2;
+    public static final int CREATE_TASK = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

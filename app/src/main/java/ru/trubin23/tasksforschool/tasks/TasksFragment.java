@@ -63,11 +63,17 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     private void showTaskDetail(@NonNull Task task) {
         Intent intent = new Intent(getContext(), TaskDetailActivity.class);
         intent.putExtra(TaskDetailActivity.TASK_DETAILS, task);
-        startActivity(intent);
+        startActivityForResult(intent, TaskDetailActivity.CHANGE_TASK);
     }
 
     private void addTask() {
         Intent intent = new Intent(getContext(), TaskDetailActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, TaskDetailActivity.CREATE_TASK);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mPresenter.activityResult(requestCode, resultCode);
     }
 }
