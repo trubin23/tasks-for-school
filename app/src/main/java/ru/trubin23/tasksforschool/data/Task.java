@@ -33,11 +33,36 @@ public class Task implements Parcelable {
         mDateOfCreation = dateOfCreation;
     }
 
-    protected Task(Parcel in) {
+    private Task(Parcel in) {
         mTitle = in.readString();
         mDescription = in.readString();
         mColor = in.readString();
         mDateOfCreation = in.readString();
+    }
+
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public String getDateOfCreation() {
+        return mDateOfCreation;
+    }
+
+    public String getColor() {
+        return mColor;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mTitle);
+        dest.writeString(mDescription);
+        dest.writeString(mColor);
+        dest.writeString(mDateOfCreation);
     }
 
     public static final Creator<Task> CREATOR = new Creator<Task>() {
@@ -51,24 +76,4 @@ public class Task implements Parcelable {
             return new Task[size];
         }
     };
-
-    public String getTitle() {
-        return mTitle;
-    }
-
-    public String getDateOfCreation() {
-        return mDateOfCreation;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mTitle);
-        dest.writeString(mDescription);
-        dest.writeString(mDateOfCreation);
-    }
 }

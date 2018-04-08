@@ -63,7 +63,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     private void showTaskDetail(@NonNull Task task) {
         Intent intent = new Intent(getContext(), TaskDetailActivity.class);
         intent.putExtra(TaskDetailActivity.TASK_DETAILS, task);
-        startActivityForResult(intent, TaskDetailActivity.CHANGE_TASK);
+        startActivityForResult(intent, TaskDetailActivity.EDIT_TASK);
     }
 
     private void addTask() {
@@ -74,6 +74,8 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mPresenter.activityResult(requestCode, resultCode);
+
+        Task task = data.getParcelableExtra(TaskDetailActivity.TASK_DETAILS);
+        mPresenter.activityResult(requestCode, resultCode, task);
     }
 }

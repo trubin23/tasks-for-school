@@ -1,5 +1,6 @@
 package ru.trubin23.tasksforschool.tasks.list;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,6 +58,8 @@ public class TasksAdapter extends BaseAdapter {
 
         TextView dateTV = rowView.findViewById(R.id.item_date);
         dateTV.setText(task.getDateOfCreation());
+
+        rowView.setBackgroundColor(Color.parseColor(task.getColor()));
 
         rowView.setOnClickListener(clickView -> mTaskItemListener.onTaskClick(task));
 
