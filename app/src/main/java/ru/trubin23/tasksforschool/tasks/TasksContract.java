@@ -1,5 +1,6 @@
 package ru.trubin23.tasksforschool.tasks;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import ru.trubin23.tasksforschool.BasePresenter;
@@ -14,6 +15,9 @@ public interface TasksContract {
 
     interface View extends BaseView<Presenter> {
 
+        void addTask(@NonNull Task task);
+
+        void editTask(@NonNull Task task);
     }
 
     interface Presenter extends BasePresenter {

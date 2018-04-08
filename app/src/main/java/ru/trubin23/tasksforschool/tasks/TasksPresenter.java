@@ -32,11 +32,11 @@ public class TasksPresenter implements TasksContract.Presenter {
         }
 
         if (requestCode == TaskDetailActivity.CREATE_TASK){
-
+            mView.addTask(task);
         }
 
         if (requestCode == TaskDetailActivity.EDIT_TASK){
-
+            mView.editTask(task);
         }
     }
 }

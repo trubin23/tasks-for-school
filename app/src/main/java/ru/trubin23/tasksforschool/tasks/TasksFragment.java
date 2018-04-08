@@ -78,4 +78,14 @@ public class TasksFragment extends Fragment implements TasksContract.View {
         Task task = data.getParcelableExtra(TaskDetailActivity.TASK_DETAILS);
         mPresenter.activityResult(requestCode, resultCode, task);
     }
+
+    @Override
+    public void addTask(@NonNull Task task) {
+        mTasksAdapter.addTask(task);
+    }
+
+    @Override
+    public void editTask(@NonNull Task task) {
+        mTasksAdapter.editTask(task);
+    }
 }

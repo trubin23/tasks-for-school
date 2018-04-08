@@ -65,4 +65,12 @@ public class TasksAdapter extends BaseAdapter {
 
         return rowView;
     }
+
+    public void addTask(@NonNull Task task) {
+        mTasks.add(task);
+    }
+
+    public void editTask(@NonNull Task task) {
+        // TODO: implement edit task
+    }
 }
