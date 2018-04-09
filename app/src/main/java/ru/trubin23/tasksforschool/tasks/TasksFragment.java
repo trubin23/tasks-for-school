@@ -75,7 +75,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Task task = data.getParcelableExtra(TaskDetailActivity.TASK_DETAILS);
+        Task task = data.getParcelableExtra(TaskDetailActivity.TASK_SAVE);
         mPresenter.activityResult(requestCode, resultCode, task);
     }
 
