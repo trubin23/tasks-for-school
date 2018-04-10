@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,10 +27,13 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     private TaskDetailContract.Presenter mPresenter;
 
     @BindView(R.id.detail_title)
-    EditText mTitle;
+    TextView mTitle;
 
     @BindView(R.id.detail_description)
     EditText mDescription;
+
+    @BindView(R.id.detail_date)
+    TextView mDate;
 
     @Nullable
     @Override
