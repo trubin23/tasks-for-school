@@ -107,4 +107,8 @@ public class Task implements Parcelable {
             return new Task[size];
         }
     };
+
+    public static boolean isValidTitle(@NonNull String title){
+        return title != null && !title.isEmpty();
+    }
 }

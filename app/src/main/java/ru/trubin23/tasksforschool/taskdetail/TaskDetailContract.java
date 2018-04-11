@@ -19,6 +19,8 @@ public interface TaskDetailContract {
         void setDescription(@NonNull String description);
 
         void showTaskList(@NonNull Task task);
+
+        void showTitleError();
     }
 
     interface Presenter extends BasePresenter {

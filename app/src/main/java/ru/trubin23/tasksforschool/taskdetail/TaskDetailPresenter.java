@@ -27,6 +27,10 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
 
     @Override
     public void saveTask(@NonNull String title, @NonNull String description) {
+        if (!Task.isValidTitle(title)){
+            mView.showTitleError();
+        }
+
         if (mTask == null){
             Task task = new Task(title, description);
             mView.showTaskList(task);
