@@ -1,6 +1,5 @@
 package ru.trubin23.tasksforschool.data;
 
-import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -21,7 +20,6 @@ public class Task implements Parcelable {
 
     private static final DateFormat sDateFormat =
             new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
-
 
     private final int mId;
 
@@ -108,7 +106,7 @@ public class Task implements Parcelable {
         }
     };
 
-    public static boolean isValidTitle(@NonNull String title){
+    public static boolean isValidTitle(@NonNull String title) {
         return title != null && !title.isEmpty();
     }
 }

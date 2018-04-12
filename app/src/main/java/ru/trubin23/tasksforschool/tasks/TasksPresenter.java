@@ -22,20 +22,19 @@ public class TasksPresenter implements TasksContract.Presenter {
 
     @Override
     public void start() {
-
     }
 
     @Override
     public void activityResult(int requestCode, int resultCode, @Nullable Task task) {
-        if (resultCode != Activity.RESULT_OK || task == null){
+        if (resultCode != Activity.RESULT_OK || task == null) {
             return;
         }
 
-        if (requestCode == TaskDetailActivity.CREATE_TASK){
+        if (requestCode == TaskDetailActivity.CREATE_TASK) {
             mView.addTask(task);
         }
 
-        if (requestCode == TaskDetailActivity.EDIT_TASK){
+        if (requestCode == TaskDetailActivity.EDIT_TASK) {
             mView.editTask(task);
         }
     }

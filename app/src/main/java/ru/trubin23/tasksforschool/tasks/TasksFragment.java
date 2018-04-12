@@ -56,6 +56,12 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
+    }
+
+    @Override
     public void setPresenter(@NonNull TasksContract.Presenter presenter) {
         mPresenter = presenter;
     }
@@ -75,7 +81,10 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Task task = data.getParcelableExtra(TaskDetailActivity.TASK_SAVE);
+        Task task = null;
+        if (data != null) {
+            task = data.getParcelableExtra(TaskDetailActivity.TASK_SAVE);
+        }
         mPresenter.activityResult(requestCode, resultCode, task);
     }
 

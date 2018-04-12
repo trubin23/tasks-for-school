@@ -48,6 +48,12 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
+    }
+
+    @Override
     public void setPresenter(@NonNull TaskDetailContract.Presenter presenter) {
         mPresenter = presenter;
     }

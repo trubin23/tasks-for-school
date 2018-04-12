@@ -1,6 +1,7 @@
 package ru.trubin23.tasksforschool.taskdetail;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import ru.trubin23.tasksforschool.data.Task;
 
@@ -13,7 +14,7 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
     private Task mTask;
     private TaskDetailContract.View mView;
 
-    TaskDetailPresenter(@NonNull Task task, @NonNull TaskDetailContract.View view) {
+    TaskDetailPresenter(@Nullable Task task, @NonNull TaskDetailContract.View view) {
         mTask = task;
         mView = view;
         mView.setPresenter(this);
@@ -21,17 +22,20 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
 
     @Override
     public void start() {
-        mView.setTitle(mTask.getTitle());
-        mView.setDescription(mTask.getDescription());
+        if (mTask != null) {
+            mView.setTitle(mTask.getTitle());
+            mView.setDescription(mTask.getDescription());
+        }
     }
 
     @Override
     public void saveTask(@NonNull String title, @NonNull String description) {
-        if (!Task.isValidTitle(title)){
+        if (!Task.isValidTitle(title)) {
             mView.showTitleError();
+            return;
         }
 
-        if (mTask == null){
+        if (mTask == null) {
             Task task = new Task(title, description);
             mView.showTaskList(task);
         } else {
