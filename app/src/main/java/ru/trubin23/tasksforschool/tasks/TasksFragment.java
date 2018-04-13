@@ -1,5 +1,6 @@
 package ru.trubin23.tasksforschool.tasks;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,6 +29,8 @@ import ru.trubin23.tasksforschool.tasks.list.TasksAdapter;
 
 public class TasksFragment extends Fragment implements TasksContract.View {
 
+    private static final String TASKS_FOR_LIST = "TASKS_FOR_LIST";
+
     private TasksContract.Presenter mPresenter;
 
     @BindView(R.id.list_view)
@@ -35,9 +41,6 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        TaskItemListener taskItemListener = this::showTaskDetail;
-        mTasksAdapter = new TasksAdapter(taskItemListener);
     }
 
     @Nullable
@@ -50,15 +53,35 @@ public class TasksFragment extends Fragment implements TasksContract.View {
         FloatingActionButton fab = getActivity().findViewById(R.id.fab_add_task);
         fab.setOnClickListener(v -> addTask());
 
-        mListView.setAdapter(mTasksAdapter);
-
         return root;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        List<Task> tasks = null;
+        if (savedInstanceState != null) {
+            tasks = savedInstanceState.getParcelableArrayList(TASKS_FOR_LIST);
+        }
+
+        TaskItemListener taskItemListener = this::showTaskDetail;
+        mTasksAdapter = new TasksAdapter(tasks, taskItemListener);
+
+        mListView.setAdapter(mTasksAdapter);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mPresenter.start();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelableArrayList(TASKS_FOR_LIST, new ArrayList<>(mTasksAdapter.getTasks()));
     }
 
     @Override

@@ -24,8 +24,12 @@ public class TasksAdapter extends BaseAdapter {
     private List<Task> mTasks;
     private TaskItemListener mTaskItemListener;
 
-    public TasksAdapter(@NonNull TaskItemListener taskItemListener) {
-        mTasks = new ArrayList<>();
+    public TasksAdapter(@Nullable List<Task> tasks, @NonNull TaskItemListener taskItemListener) {
+        if (tasks != null) {
+            mTasks = tasks;
+        } else {
+            mTasks = new ArrayList<>();
+        }
         mTaskItemListener = taskItemListener;
     }
 
@@ -65,6 +69,11 @@ public class TasksAdapter extends BaseAdapter {
         rowView.setOnClickListener(clickView -> mTaskItemListener.onTaskClick(task));
 
         return rowView;
+    }
+
+    @NonNull
+    public List<Task> getTasks() {
+        return mTasks;
     }
 
     public void addTask(@NonNull Task task) {
