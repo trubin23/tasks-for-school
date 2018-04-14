@@ -13,15 +13,16 @@
         android:paddingTop="@dimen/fragment_vertical_padding">
 
         <EditText
-            android:id="@+id/detail_title"
+            android:id="@+id/task_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLines="1"
             android:hint="@string/title_hint"/>
 
         <EditText
-            android:id="@+id/detail_description"
+            android:id="@+id/task_description"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/task_description_height"
             android:hint="@string/description_hint" />
 
     </LinearLayout>

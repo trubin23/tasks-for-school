@@ -1,6 +1,5 @@
 package ru.trubin23.tasksforschool.tasks;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,8 +17,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.trubin23.tasksforschool.R;
-import ru.trubin23.tasksforschool.taskdetail.TaskDetailActivity;
 import ru.trubin23.tasksforschool.data.Task;
+import ru.trubin23.tasksforschool.taskdetail.TaskDetailActivity;
 import ru.trubin23.tasksforschool.tasks.list.TaskItemListener;
 import ru.trubin23.tasksforschool.tasks.list.TasksAdapter;
 

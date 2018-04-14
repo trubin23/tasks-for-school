@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,10 +26,10 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
 
     private TaskDetailContract.Presenter mPresenter;
 
-    @BindView(R.id.detail_title)
+    @BindView(R.id.task_title)
     EditText mTitle;
 
-    @BindView(R.id.detail_description)
+    @BindView(R.id.task_description)
     EditText mDescription;
 
     @Nullable
