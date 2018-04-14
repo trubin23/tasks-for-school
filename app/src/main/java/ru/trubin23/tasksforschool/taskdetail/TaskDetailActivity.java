@@ -1,7 +1,7 @@
 package ru.trubin23.tasksforschool.taskdetail;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import ru.trubin23.tasksforschool.R;
 import ru.trubin23.tasksforschool.data.Task;
@@ -22,7 +22,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         TaskDetailFragment fragment = (TaskDetailFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.content_frame);
         if (fragment == null) {
-            fragment = new TaskDetailFragment();
+            fragment = TaskDetailFragment.newInstance();
             ActivityUtils.addFragmentToActivity(
                     getSupportFragmentManager(), fragment, R.id.content_frame);
         }

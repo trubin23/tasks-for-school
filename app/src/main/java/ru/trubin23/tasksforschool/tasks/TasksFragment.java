@@ -37,9 +37,8 @@ public class TasksFragment extends Fragment implements TasksContract.View {
 
     private TasksAdapter mTasksAdapter;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public static TasksFragment newInstance() {
+        return new TasksFragment();
     }
 
     @Nullable

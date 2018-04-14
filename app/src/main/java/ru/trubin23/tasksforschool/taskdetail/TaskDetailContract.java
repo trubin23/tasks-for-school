@@ -1,7 +1,6 @@
 package ru.trubin23.tasksforschool.taskdetail;
 
 import android.support.annotation.NonNull;
-import android.text.Editable;
 
 import ru.trubin23.tasksforschool.BasePresenter;
 import ru.trubin23.tasksforschool.BaseView;

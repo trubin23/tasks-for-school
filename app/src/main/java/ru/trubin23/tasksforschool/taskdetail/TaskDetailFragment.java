@@ -32,6 +32,10 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     @BindView(R.id.task_description)
     EditText mDescription;
 
+    public static TaskDetailFragment newInstance() {
+        return new TaskDetailFragment();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
