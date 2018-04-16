@@ -9,6 +9,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -16,6 +19,7 @@ import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.trubin23.tasksforschool.R;
+import ru.trubin23.tasksforschool.colorpicker.ColorPickerActivity;
 import ru.trubin23.tasksforschool.data.Task;
 
 /**
@@ -54,6 +58,26 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     public void onResume() {
         super.onResume();
         mPresenter.start();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.taskdetail_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_color_picker:
+                colorPicker();
+                return true;
+        }
+        return false;
+    }
+
+    private void colorPicker(){
+        Intent intent = new Intent(getContext(), TaskDetailActivity.class);
+        startActivityForResult(intent, ColorPickerActivity.COLOR_SELECTION);
     }
 
     @Override
