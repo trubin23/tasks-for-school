@@ -47,6 +47,8 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
         View root = inflater.inflate(R.layout.taskdetail_frag, container, false);
         ButterKnife.bind(this, root);
 
+        setHasOptionsMenu(true);
+
         FloatingActionButton fab = getActivity().findViewById(R.id.fab_save_task);
         fab.setOnClickListener(view -> mPresenter.saveTask(
                 mTitle.getText().toString(), mDescription.getText().toString()));
@@ -76,7 +78,7 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     }
 
     private void colorPicker(){
-        Intent intent = new Intent(getContext(), TaskDetailActivity.class);
+        Intent intent = new Intent(getContext(), ColorPickerActivity.class);
         startActivityForResult(intent, ColorPickerActivity.COLOR_SELECTION);
     }
 

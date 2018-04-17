@@ -1,11 +1,9 @@
 package ru.trubin23.tasksforschool.colorpicker;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import ru.trubin23.tasksforschool.R;
-import ru.trubin23.tasksforschool.tasks.TasksFragment;
-import ru.trubin23.tasksforschool.tasks.TasksPresenter;
 import ru.trubin23.tasksforschool.util.ActivityUtils;
 
 public class ColorPickerActivity extends AppCompatActivity {
