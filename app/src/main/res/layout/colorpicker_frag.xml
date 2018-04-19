@@ -29,6 +29,11 @@
             />
 
     </FrameLayout>
+
+    <ru.trubin23.tasksforschool.colorpicker.SliderView
+        android:id="@+id/sliderView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sliderHeight" />
     
     <EditText
         android:id="@+id/hexEdit"
