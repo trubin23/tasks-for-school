@@ -1,33 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/fragment_vertical_padding"
+    android:paddingEnd="@dimen/fragment_horizontal_padding"
+    android:paddingStart="@dimen/fragment_horizontal_padding"
+    android:paddingTop="@dimen/fragment_vertical_padding"
+    android:layout_gravity="center">
 
-    <ru.trubin23.tasksforschool.colorpicker.GradientView
-        android:id="@+id/color_picker"
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ru.trubin23.tasksforschool.colorpicker.SwatchView
+            android:id="@+id/swatchView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:radialMargin="@dimen/radialMargin"
+            />
+
+        <ru.trubin23.tasksforschool.colorpicker.HueSatView
+            android:id="@+id/hueSatView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+    </FrameLayout>
+    
+    <EditText
+        android:id="@+id/hexEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/color_gradient"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginBottom="@dimen/fragment_vertical_padding"
+        />
 
-    <ru.trubin23.tasksforschool.colorpicker.GradientView
-        android:id="@+id/color_gradient"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
