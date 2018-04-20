@@ -10,15 +10,8 @@ import android.view.View;
  */
 
 public class SwatchView extends View {
-    public SwatchView(Context context) {
-        super(context);
-    }
 
     public SwatchView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    public SwatchView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
     }
 }

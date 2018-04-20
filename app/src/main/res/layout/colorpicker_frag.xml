@@ -19,7 +19,6 @@
             android:id="@+id/swatchView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:radialMargin="@dimen/radialMargin"
             />
 
         <ru.trubin23.tasksforschool.colorpicker.HueSatView
