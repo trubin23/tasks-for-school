@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/fragment_vertical_padding"
     android:paddingEnd="@dimen/fragment_horizontal_padding"
     android:paddingStart="@dimen/fragment_horizontal_padding"
-    android:paddingTop="@dimen/fragment_vertical_padding"
-    android:layout_gravity="center">
+    android:paddingTop="@dimen/fragment_vertical_padding">
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -17,14 +17,12 @@
         <ru.trubin23.tasksforschool.colorpicker.SwatchView
             android:id="@+id/swatchView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
         <ru.trubin23.tasksforschool.colorpicker.HueSatView
             android:id="@+id/hueSatView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
     </FrameLayout>
 
@@ -33,14 +31,14 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/sliderHeight"
         android:layout_marginTop="@dimen/margin" />
-    
+
     <EditText
         android:id="@+id/hexEdit"
-        android:text="@string/default_color"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin"
+        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/fragment_vertical_padding"
-        />
+        android:layout_marginTop="@dimen/margin"
+        android:text="@string/default_color" />
 
 </LinearLayout>

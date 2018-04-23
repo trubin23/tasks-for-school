@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -17,14 +19,41 @@ public class SliderView extends View {
 
     private ObservableColor mObservableColor = new ObservableColor(0);
 
-    Path borderPath;
-    Paint borderPaint;
+    private final Rect mViewRect = new Rect();
+
+    private Path mBorderPath;
+    private Paint mBorderPaint;
+    private Paint mPointerPaint;
+    private int mWidth;
+    private int mHeight;
+    private Bitmap mBitmap;
+
+    private float currentPos;
 
     public SliderView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
-        borderPath = new Path();
-        borderPaint = Resources.makeLinePaint(context);
+        mPointerPaint = Resources.makeLinePaint(context);
+        mBorderPaint = Resources.makeLinePaint(context);
+        mBorderPath = new Path();
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        mWidth = w;
+        mHeight = h;
+        mViewRect.set(0, 0, w, h);
+        float inset = mBorderPaint.getStrokeWidth() / 2;
+        mBorderPath.reset();
+        mBorderPath.addRect(new RectF(inset, inset, w - inset, h - inset), Path.Direction.CW);
+        updateBitmap();
+    }
+
+    protected void updateBitmap() {
+        if (mWidth > 0 && mHeight > 0) {
+            mBitmap = makeBitmap(mWidth, mHeight);
+            optimisePointerColor();
+        }
     }
 
     protected Bitmap makeBitmap(int w, int h) {
@@ -42,5 +71,15 @@ public class SliderView extends View {
         final int bmpWidth = isWide ? w : 1;
         final int bmpHeight = isWide ? 1 : h;
         return Bitmap.createBitmap(colors, bmpWidth, bmpHeight, Bitmap.Config.ARGB_8888);
+    }
+
+    private void optimisePointerColor() {
+        mPointerPaint.setColor(getPointerColor(currentPos));
+    }
+
+    protected int getPointerColor(float currentPos) {
+        float brightColorLightness = mObservableColor.getLightness();
+        float posLightness = currentPos * brightColorLightness;
+        return posLightness > 0.5f ? 0xff000000 : 0xffffffff;
     }
 }
