@@ -2,6 +2,7 @@ package ru.trubin23.tasksforschool.colorpicker;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -23,7 +24,9 @@ public class SliderView extends View {
 
     private Path mBorderPath;
     private Paint mBorderPaint;
+    private Path mPointerPath;
     private Paint mPointerPaint;
+    private Paint mCheckerPaint;
     private int mWidth;
     private int mHeight;
     private Bitmap mBitmap;
@@ -33,6 +36,8 @@ public class SliderView extends View {
     public SliderView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
+        mPointerPath = Resources.makePointerPath(context);
+        mCheckerPaint = Resources.makeCheckerPaint(context);
         mPointerPaint = Resources.makeLinePaint(context);
         mBorderPaint = Resources.makeLinePaint(context);
         mBorderPath = new Path();
@@ -81,5 +86,27 @@ public class SliderView extends View {
         float brightColorLightness = mObservableColor.getLightness();
         float posLightness = currentPos * brightColorLightness;
         return posLightness > 0.5f ? 0xff000000 : 0xffffffff;
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        canvas.drawPath(mBorderPath, mCheckerPaint);
+        canvas.drawBitmap(mBitmap, null, mViewRect, null);
+        canvas.drawPath(mBorderPath, mBorderPaint);
+
+        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        if (isWide()) {
+            canvas.translate(mWidth * currentPos, mHeight / 2);
+        }
+        else {
+            canvas.translate(mWidth / 2, mHeight * (1 - currentPos));
+        }
+        canvas.drawPath(mPointerPath, mPointerPaint);
+        canvas.restore();
+    }
+
+    private boolean isWide() {
+        return mWidth > mHeight;
     }
 }
