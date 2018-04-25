@@ -1,5 +1,6 @@
 package ru.trubin23.tasksforschool.colorpicker;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -10,13 +11,14 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
  * Created by Andrey on 19.04.2018.
  */
 
-public class SliderView extends View {
+public class SliderView extends View implements ColorObserver {
 
     private ObservableColor mObservableColor = new ObservableColor(0);
 
@@ -88,6 +90,7 @@ public class SliderView extends View {
         return posLightness > 0.5f ? 0xff000000 : 0xffffffff;
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -108,5 +111,34 @@ public class SliderView extends View {
 
     private boolean isWide() {
         return mWidth > mHeight;
+    }
+
+    @Override
+    public void updateColor(ObservableColor observableColor) {
+        currentPos = mObservableColor.getValue();
+        optimisePointerColor();
+        updateBitmap();
+        invalidate();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getActionMasked();
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_MOVE:
+                currentPos = valueForTouchPos(event.getX(), event.getY());
+                optimisePointerColor();
+                mObservableColor.updateValue(currentPos, this);
+                invalidate();
+                getParent().requestDisallowInterceptTouchEvent(true);
+                return true;
+        }
+        return super.onTouchEvent(event);
+    }
+
+    private float valueForTouchPos(float x, float y) {
+        final float val = isWide() ? x / mWidth : 1 - y / mHeight;
+        return Math.max(0, Math.min(1, val));
     }
 }

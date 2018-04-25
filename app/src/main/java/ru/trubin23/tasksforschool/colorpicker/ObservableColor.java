@@ -2,11 +2,16 @@ package ru.trubin23.tasksforschool.colorpicker;
 
 import android.graphics.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Andrey on 22.04.2018.
  */
 
 class ObservableColor {
+
+    private final List<ColorObserver> mObservers = new ArrayList<>();
 
     private final float[] hsv = {0, 0, 0};
 
@@ -32,17 +37,34 @@ class ObservableColor {
         return hsv[1];
     }
 
-    public float getValue() {
+    float getValue() {
         return hsv[2];
     }
 
-    public float getLightness() {
+    float getLightness() {
         return getLightnessWithValue(hsv[2]);
     }
 
-    public float getLightnessWithValue(float value) {
+    private float getLightnessWithValue(float value) {
         float[] hsV = {hsv[0], hsv[1], value};
         final int color = Color.HSVToColor(hsV);
-        return (Color.red(color) * 0.2126f + Color.green(color) * 0.7152f + Color.blue(color) * 0.0722f)/0xff;
+        return (Color.red(color) * 0.2126f + Color.green(color) * 0.7152f + Color.blue(color) * 0.0722f) / 0xff;
+    }
+
+    void updateValue(float value, ColorObserver sender) {
+        hsv[2] = value;
+        notifyOtherObservers(sender);
+    }
+
+    private void notifyOtherObservers(ColorObserver sender) {
+        for (ColorObserver observer : mObservers) {
+            if (observer != sender) {
+                observer.updateColor(this);
+            }
+        }
+    }
+
+    public void addObserver(ColorObserver observer) {
+        mObservers.add(observer);
     }
 }
