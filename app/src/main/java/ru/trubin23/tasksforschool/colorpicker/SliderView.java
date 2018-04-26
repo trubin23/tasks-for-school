@@ -141,4 +141,13 @@ public class SliderView extends View implements ColorObserver {
         final float val = isWide() ? x / mWidth : 1 - y / mHeight;
         return Math.max(0, Math.min(1, val));
     }
+
+    public void observeColor(ObservableColor observableColor) {
+        mObservableColor = observableColor;
+        observableColor.addObserver(this);
+    }
+
+    public void notifyListener(float currentPos) {
+        mObservableColor.updateValue(currentPos, this);
+    }
 }
