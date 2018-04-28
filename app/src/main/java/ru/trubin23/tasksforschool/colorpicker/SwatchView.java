@@ -1,6 +1,7 @@
 package ru.trubin23.tasksforschool.colorpicker;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -9,25 +10,35 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
+import ru.trubin23.tasksforschool.R;
+
 /**
  * Created by Andrey on 19.04.2018.
  */
 
 public class SwatchView extends SquareView implements ColorObserver {
 
-    private Paint mCheckerPaint;
-    private Paint mBorderPaint;
-    private Paint mOldFillPaint;
-    private Paint mNewFillPaint;
+    private final Paint mCheckerPaint;
+    private final Paint mBorderPaint;
+    private final Paint mOldFillPaint;
+    private final Paint mNewFillPaint;
 
-    private Path mBorderPath;
-    private Path mOldFillPath;
-    private Path mNewFillPath;
+    private final Path mBorderPath;
+    private final Path mOldFillPath;
+    private final Path mNewFillPath;
 
-    private final float mRadialMarginPx = 0;
+    private float mRadialMarginPx = 0;
 
     public SwatchView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+
+        if (attrs != null) {
+            TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SwatchView, 0, 0);
+            mRadialMarginPx = a.getDimension(R.styleable.SwatchView_radialMargin, 0f);
+        }
+        else {
+            mRadialMarginPx = 0;
+        }
 
         mCheckerPaint = Resources.makeCheckerPaint(context);
         mBorderPaint = Resources.makeLinePaint(context);
@@ -106,5 +117,14 @@ public class SwatchView extends SquareView implements ColorObserver {
         final RectF ovalRect = new RectF(-r, -r, r, r);
         ovalRect.offset(viewSize, viewSize);
         path.arcTo(ovalRect, startAngle, sweepAngle);
+    }
+
+    void setOriginalColor(int color) {
+        mOldFillPaint.setColor(color);
+        invalidate();
+    }
+
+    void observeColor(ObservableColor observableColor) {
+        observableColor.addObserver(this);
     }
 }
