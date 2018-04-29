@@ -1,15 +1,19 @@
 package ru.trubin23.tasksforschool.colorpicker;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -63,7 +67,7 @@ public class HueSatView extends SquareView implements ColorObserver {
         final double angle = hue / 360 * Math.PI / 2;
         final double dx = distance * Math.cos(angle);
         final double dy = distance * Math.sin(angle);
-        pointer.set(r - (float)dx, r - (float)dy);
+        pointer.set(r - (float) dx, r - (float) dy);
     }
 
     private void optimisePointerColor() {
@@ -105,7 +109,7 @@ public class HueSatView extends SquareView implements ColorObserver {
         final double dx = (r - x) / r;
         final double dy = (r - y) / r;
         final double sat = dx * dx + dy * dy;
-        return (float)sat;
+        return (float) sat;
     }
 
     private static float hueForPos(float x, float y, float radiusPx) {
@@ -114,6 +118,94 @@ public class HueSatView extends SquareView implements ColorObserver {
         final double dy = (r - y) / r;
         final double angle = Math.atan2(dy, dx);
         final double hue = 360 * angle / (Math.PI / 2);
-        return (float)hue;
+        return (float) hue;
+    }
+
+    @SuppressLint("WrongConstant")
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+        canvas.save(Canvas.MATRIX_SAVE_FLAG | Canvas.CLIP_SAVE_FLAG);
+
+        canvas.clipPath(mBorderPath);
+        canvas.drawBitmap(sBitmap, null, mViewRect, null);
+        canvas.translate(mPointer.x, mPointer.y);
+        canvas.drawPath(mPointerPath, mPointerPaint);
+
+        canvas.restore();
+
+        canvas.drawPath(mBorderPath, mBorderPaint);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getActionMasked();
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+                boolean withinPicker = clamp(mPointer, event.getX(), event.getY(), true);
+                if (withinPicker) update();
+                return withinPicker;
+            case MotionEvent.ACTION_MOVE:
+                clamp(mPointer, event.getX(), event.getY(), false);
+                update();
+                getParent().requestDisallowInterceptTouchEvent(true);
+                return true;
+        }
+        return super.onTouchEvent(event);
+    }
+
+    private void update() {
+        mObservableColor.updateHueSat(
+                hueForPos(mPointer.x, mPointer.y, mWidth),
+                satForPos(mPointer.x, mPointer.y, mWidth),
+                this);
+        optimisePointerColor();
+        invalidate();
+    }
+
+    private boolean clamp(PointF pointer, float x, float y, boolean rejectOutside) {
+        x = Math.min(x, mWidth);
+        y = Math.min(y, mHeight);
+        final float dx = mWidth - x;
+        final float dy = mHeight - y;
+        final float r = (float) Math.sqrt(dx * dx + dy * dy);
+        boolean outside = r > mWidth;
+        if (!outside || !rejectOutside) {
+            if (outside) {
+                x = mWidth - dx * mWidth / r;
+                y = mWidth - dy * mWidth / r;
+            }
+            pointer.set(x, y);
+        }
+        return !outside;
+    }
+
+    @Override
+    protected void onSizeChanged(int width, int height, int oldw, int oldh) {
+        mWidth = width;
+        mHeight = height;
+        mViewRect.set(0, 0, width, height);
+
+        float inset = mBorderPaint.getStrokeWidth() / 2;
+        makeBorderPath(mBorderPath, width, height, inset);
+
+        updateColor(mObservableColor);
+    }
+
+    private static void makeBorderPath(Path borderPath, int width, int height, float inset) {
+        width -= inset;
+        height -= inset;
+        borderPath.reset();
+        borderPath.moveTo(width, inset);
+        borderPath.lineTo(width, height);
+        borderPath.lineTo(inset, height);
+        borderPath.addArc(new RectF(inset, inset, 2 * width, 2 * height), 180, 270);
+        borderPath.close();
+    }
+
+    void observeColor(ObservableColor observableColor) {
+        mObservableColor = observableColor;
+        observableColor.addObserver(this);
     }
 }

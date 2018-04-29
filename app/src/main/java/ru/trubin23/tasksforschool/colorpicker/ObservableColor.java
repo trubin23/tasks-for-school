@@ -64,7 +64,13 @@ class ObservableColor {
         }
     }
 
-    public void addObserver(ColorObserver observer) {
+    void addObserver(ColorObserver observer) {
         mObservers.add(observer);
+    }
+
+    void updateHueSat(float hue, float sat, ColorObserver sender) {
+        hsv[0] = hue;
+        hsv[1] = sat;
+        notifyOtherObservers(sender);
     }
 }
