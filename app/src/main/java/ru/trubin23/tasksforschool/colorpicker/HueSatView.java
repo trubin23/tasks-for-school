@@ -14,7 +14,6 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
-import android.view.View;
 
 /**
  * Created by Andrey on 19.04.2018.

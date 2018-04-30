@@ -13,46 +13,46 @@ class ObservableColor {
 
     private final List<ColorObserver> mObservers = new ArrayList<>();
 
-    private final float[] hsv = {0, 0, 0};
+    private final float[] mHsv = {0, 0, 0};
 
     ObservableColor(int color) {
-        Color.colorToHSV(color, hsv);
+        Color.colorToHSV(color, mHsv);
     }
 
     void getHsv(float hsvOut[]) {
-        hsvOut[0] = hsv[0];
-        hsvOut[1] = hsv[1];
-        hsvOut[2] = hsv[2];
+        hsvOut[0] = mHsv[0];
+        hsvOut[1] = mHsv[1];
+        hsvOut[2] = mHsv[2];
     }
 
     public int getColor() {
-        return Color.HSVToColor(hsv);
+        return Color.HSVToColor(mHsv);
     }
 
-    public float getHue() {
-        return hsv[0];
+    float getHue() {
+        return mHsv[0];
     }
 
-    public float getSat() {
-        return hsv[1];
+    float getSat() {
+        return mHsv[1];
     }
 
     float getValue() {
-        return hsv[2];
+        return mHsv[2];
     }
 
     float getLightness() {
-        return getLightnessWithValue(hsv[2]);
+        return getLightnessWithValue(mHsv[2]);
     }
 
     float getLightnessWithValue(float value) {
-        float[] hsV = {hsv[0], hsv[1], value};
+        float[] hsV = {mHsv[0], mHsv[1], value};
         final int color = Color.HSVToColor(hsV);
         return (Color.red(color) * 0.2126f + Color.green(color) * 0.7152f + Color.blue(color) * 0.0722f) / 0xff;
     }
 
     void updateValue(float value, ColorObserver sender) {
-        hsv[2] = value;
+        mHsv[2] = value;
         notifyOtherObservers(sender);
     }
 
@@ -69,8 +69,13 @@ class ObservableColor {
     }
 
     void updateHueSat(float hue, float sat, ColorObserver sender) {
-        hsv[0] = hue;
-        hsv[1] = sat;
+        mHsv[0] = hue;
+        mHsv[1] = sat;
+        notifyOtherObservers(sender);
+    }
+
+    void updateColor(int color, ColorObserver sender) {
+        Color.colorToHSV(color, mHsv);
         notifyOtherObservers(sender);
     }
 }
