@@ -1,5 +1,6 @@
 package ru.trubin23.tasksforschool.data;
 
+import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -27,7 +28,7 @@ public class Task implements Parcelable {
 
     private String mDescription;
 
-    private final String mColor;
+    private final int mColor;
 
     private final String mDateOfCreation;
 
@@ -37,7 +38,7 @@ public class Task implements Parcelable {
         mId = random.nextInt();
         mTitle = title;
         mDescription = description;
-        mColor = String.format("#%02x%02x%02x",
+        mColor = Color.rgb(
                 random.nextInt(RANGE_COLOR) + MIN_COLOR,
                 random.nextInt(RANGE_COLOR) + MIN_COLOR,
                 random.nextInt(RANGE_COLOR) + MIN_COLOR);
@@ -48,7 +49,7 @@ public class Task implements Parcelable {
         mId = in.readInt();
         mTitle = in.readString();
         mDescription = in.readString();
-        mColor = in.readString();
+        mColor = in.readInt();
         mDateOfCreation = in.readString();
     }
 
@@ -68,7 +69,7 @@ public class Task implements Parcelable {
         return mDateOfCreation;
     }
 
-    public String getColor() {
+    public int getColor() {
         return mColor;
     }
 
@@ -90,7 +91,7 @@ public class Task implements Parcelable {
         dest.writeInt(mId);
         dest.writeString(mTitle);
         dest.writeString(mDescription);
-        dest.writeString(mColor);
+        dest.writeInt(mColor);
         dest.writeString(mDateOfCreation);
     }
 

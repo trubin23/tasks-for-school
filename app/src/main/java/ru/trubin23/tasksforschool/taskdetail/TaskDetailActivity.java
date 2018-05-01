@@ -1,6 +1,7 @@
 package ru.trubin23.tasksforschool.taskdetail;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import ru.trubin23.tasksforschool.R;
@@ -19,6 +20,11 @@ public class TaskDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.taskdetail_act);
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         TaskDetailFragment fragment = (TaskDetailFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.content_frame);
         if (fragment == null) {
@@ -30,5 +36,11 @@ public class TaskDetailActivity extends AppCompatActivity {
         Task task = getIntent().getParcelableExtra(TASK_DETAILS);
 
         new TaskDetailPresenter(task, fragment);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

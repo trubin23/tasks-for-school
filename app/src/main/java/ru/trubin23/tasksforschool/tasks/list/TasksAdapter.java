@@ -64,7 +64,7 @@ public class TasksAdapter extends BaseAdapter {
         TextView dateTV = rowView.findViewById(R.id.item_date);
         dateTV.setText(task.getDateOfCreation());
 
-        rowView.setBackgroundColor(Color.parseColor(task.getColor()));
+        rowView.setBackgroundColor(task.getColor());
 
         rowView.setOnClickListener(clickView -> mTaskItemListener.onTaskClick(task));
 
