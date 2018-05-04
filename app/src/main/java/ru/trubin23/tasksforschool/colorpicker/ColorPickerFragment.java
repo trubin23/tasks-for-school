@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.trubin23.tasksforschool.R;
@@ -22,7 +24,11 @@ import ru.trubin23.tasksforschool.R;
 
 public class ColorPickerFragment extends Fragment implements ColorPickerContract.View {
 
+    private static final int DEGREES_IN_CIRCLE = 360;
+
     private ColorPickerContract.Presenter mPresenter;
+
+    private List<ColorSquare> mColorSquares;
 
     @BindView(R.id.color_picker)
     ConstraintLayout mConstraintLayout;
@@ -44,17 +50,28 @@ public class ColorPickerFragment extends Fragment implements ColorPickerContract
                 colors);
         mConstraintLayout.setBackground(gradientDrawable);
 
+        addColorSquares();
+
         return root;
     }
 
     private int[] buildHueColorArray() {
-        int[] hue = new int[361];
-        int count = 0;
-        for (int i = hue.length - 1; i >= 0; i--, count++)
-        {
-            hue[count] = Color.HSVToColor(new float[]{i, 1f, 1f});
+        int[] hue = new int[DEGREES_IN_CIRCLE];
+        for (int i = 0; i < hue.length; i++) {
+            hue[i] = Color.HSVToColor(new float[]{i, 1f, 1f});
         }
         return hue;
+    }
+
+    private void addColorSquares() {
+        final int NUMBER_OF_SQUARES = 16;
+
+        for (int i = 0; i < NUMBER_OF_SQUARES; i++) {
+            ColorSquare colorSquare = new ColorSquare(getContext());
+            colorSquare.setBackgroundColor(Color.HSVToColor(new float[]{
+                    DEGREES_IN_CIRCLE*(i*2+1)/(NUMBER_OF_SQUARES*2), 1f, 1f}));
+            mConstraintLayout.addView(colorSquare);
+        }
     }
 
     @Override

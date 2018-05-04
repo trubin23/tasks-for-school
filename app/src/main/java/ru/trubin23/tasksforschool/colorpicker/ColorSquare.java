@@ -10,8 +10,14 @@ import android.util.AttributeSet;
  */
 
 public class ColorSquare extends AppCompatImageView {
+
+    private static int SQUARE_SIDE = 200;
+    private static int SQUARE_MARGIN = 50;
+
     public ColorSquare(Context context) {
         super(context);
+        setMinimumWidth(SQUARE_SIDE);
+        setMinimumHeight(SQUARE_SIDE);
     }
 
     public ColorSquare(Context context, @Nullable AttributeSet attrs) {
