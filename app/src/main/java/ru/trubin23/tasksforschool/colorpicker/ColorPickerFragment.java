@@ -18,6 +18,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.trubin23.tasksforschool.R;
 
+import static ru.trubin23.tasksforschool.colorpicker.ColorSquare.SQUARE_MARGIN;
+import static ru.trubin23.tasksforschool.colorpicker.ColorSquare.SQUARE_SIDE;
+
 /**
  * Created by Andrey on 15.04.2018.
  */
@@ -68,9 +71,23 @@ public class ColorPickerFragment extends Fragment implements ColorPickerContract
 
         for (int i = 0; i < NUMBER_OF_SQUARES; i++) {
             ColorSquare colorSquare = new ColorSquare(getContext());
-            colorSquare.setBackgroundColor(Color.HSVToColor(new float[]{
-                    DEGREES_IN_CIRCLE*(i*2+1)/(NUMBER_OF_SQUARES*2), 1f, 1f}));
-            mConstraintLayout.addView(colorSquare);
+
+            int id = i + 1;
+            colorSquare.setId(id);
+
+            ConstraintLayout.LayoutParams paramsNew =
+                    new ConstraintLayout.LayoutParams(SQUARE_SIDE, SQUARE_SIDE);
+            paramsNew.setMargins(SQUARE_MARGIN, SQUARE_MARGIN, SQUARE_MARGIN, SQUARE_MARGIN);
+
+            if (id != 1) {
+                paramsNew.startToEnd = id - 1;
+            }
+
+            colorSquare.setLayoutParams(paramsNew);
+
+            float centerSquare = DEGREES_IN_CIRCLE * (i * 2 + 1) / (NUMBER_OF_SQUARES * 2);
+            colorSquare.setBackgroundColor(Color.HSVToColor(new float[]{centerSquare, 1f, 1f}));
+            mConstraintLayout.addView(colorSquare, paramsNew);
         }
     }
 
