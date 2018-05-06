@@ -25,7 +25,9 @@ import ru.trubin23.tasksforschool.R;
 
 public class ColorPickerFragment extends Fragment implements ColorPickerContract.View {
 
+    private static final String LAST_SELECTED_COLOR = "last_selected_color";
     private static final int DEGREES_IN_CIRCLE = 360;
+    private static final int NUMBER_OF_SQUARES = 16;
 
     private ColorPickerContract.Presenter mPresenter;
 
@@ -60,6 +62,25 @@ public class ColorPickerFragment extends Fragment implements ColorPickerContract
         return root;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        int color = colorCalculation(0, NUMBER_OF_SQUARES);
+        if (savedInstanceState != null) {
+            color = savedInstanceState.getInt(LAST_SELECTED_COLOR, color);
+        }
+        colorSelection(color);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        ColorDrawable drawable = (ColorDrawable) mSelectedColor.getBackground();
+        outState.putInt(LAST_SELECTED_COLOR, drawable.getColor());
+    }
+
     private int[] buildHueColorArray() {
         int[] hue = new int[DEGREES_IN_CIRCLE];
         for (int i = 0; i < hue.length; i++) {
@@ -69,13 +90,11 @@ public class ColorPickerFragment extends Fragment implements ColorPickerContract
     }
 
     private int colorCalculation(int index, int numberOfSquares) {
-        float centerSquare = DEGREES_IN_CIRCLE * (index * 2 + 1) / (numberOfSquares * 2);
+        float centerSquare = DEGREES_IN_CIRCLE * (index * 2 + 1) / (numberOfSquares * 2.0f);
         return Color.HSVToColor(new float[]{centerSquare, 1f, 1f});
     }
 
     private void addColorSquares() {
-        final int NUMBER_OF_SQUARES = 16;
-
         for (int i = 0; i < NUMBER_OF_SQUARES; i++) {
             ColorSquare colorSquare = new ColorSquare(getContext());
             if (i == 0) {
@@ -91,9 +110,6 @@ public class ColorPickerFragment extends Fragment implements ColorPickerContract
                 colorSelection(drawable.getColor());
             });
         }
-
-        int color = colorCalculation(0, NUMBER_OF_SQUARES);
-        colorSelection(color);
     }
 
     private void colorSelection(int color) {
