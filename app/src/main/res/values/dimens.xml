@@ -6,5 +6,8 @@
     <dimen name="fragment_vertical_padding">16dp</dimen>
     <dimen name="fragment_horizontal_padding">16dp</dimen>
 
-    <dimen name="square_side">250dp</dimen>
+    <dimen name="color_square_margin">20dp</dimen>
+    <dimen name="color_square_side">80dp</dimen>
+    <dimen name="selected_color_margin">20dp</dimen>
+    <dimen name="selected_color_size">120dp</dimen>
 </resources>

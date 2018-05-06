@@ -22,8 +22,9 @@
 
     <ImageView
         android:id="@+id/selected_color"
-        android:layout_width="200px"
-        android:layout_height="200px"
+        android:layout_width="@dimen/selected_color_size"
+        android:layout_height="@dimen/selected_color_size"
+        android:layout_margin="@dimen/selected_color_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/scroll_view" />
 

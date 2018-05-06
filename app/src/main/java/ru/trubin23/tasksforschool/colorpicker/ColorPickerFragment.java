@@ -64,18 +64,26 @@ public class ColorPickerFragment extends Fragment implements ColorPickerContract
         return hue;
     }
 
+    private int colorCalculation(int index, int numberOfSquares) {
+        float centerSquare = DEGREES_IN_CIRCLE * (index * 2 + 1) / (numberOfSquares * 2);
+        return Color.HSVToColor(new float[]{centerSquare, 1f, 1f});
+    }
+
     private void addColorSquares() {
         final int NUMBER_OF_SQUARES = 16;
 
         for (int i = 0; i < NUMBER_OF_SQUARES; i++) {
             ColorSquare colorSquare = new ColorSquare(getContext());
 
-            float centerSquare = DEGREES_IN_CIRCLE * (i * 2 + 1) / (NUMBER_OF_SQUARES * 2);
-            colorSquare.setBackgroundColor(Color.HSVToColor(new float[]{centerSquare, 1f, 1f}));
+            int color = colorCalculation(i, NUMBER_OF_SQUARES);
+            colorSquare.setBackgroundColor(color);
             mColorPickerLayout.addView(colorSquare);
 
             colorSquare.setOnClickListener(this::colorSelection);
         }
+
+        int color = colorCalculation(0, NUMBER_OF_SQUARES);
+        mSelectedColor.setBackgroundColor(color);
     }
 
     private void colorSelection(View view) {

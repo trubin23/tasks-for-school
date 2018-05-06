@@ -13,9 +13,6 @@ import ru.trubin23.tasksforschool.R;
 
 public class ColorSquare extends AppCompatImageView {
 
-    private static int SQUARE_SIDE = 200;
-    private static int SQUARE_MARGIN = 50;
-
     public ColorSquare(Context context) {
         this(context, null);
     }
@@ -23,9 +20,10 @@ public class ColorSquare extends AppCompatImageView {
     public ColorSquare(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        LinearLayout.LayoutParams layoutParams =
-                new LinearLayout.LayoutParams(SQUARE_SIDE, SQUARE_SIDE);
-        layoutParams.setMargins(SQUARE_MARGIN, SQUARE_MARGIN, SQUARE_MARGIN, SQUARE_MARGIN);
+        int side = (int) getResources().getDimension(R.dimen.color_square_side);
+        int margin = (int) getResources().getDimension(R.dimen.color_square_margin);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(side, side);
+        layoutParams.setMargins(margin, margin, margin, margin);
 
         setLayoutParams(layoutParams);
 
