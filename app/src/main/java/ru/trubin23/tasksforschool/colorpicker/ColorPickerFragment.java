@@ -5,21 +5,17 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.trubin23.tasksforschool.R;
-
-import static ru.trubin23.tasksforschool.colorpicker.ColorSquare.SQUARE_MARGIN;
-import static ru.trubin23.tasksforschool.colorpicker.ColorSquare.SQUARE_SIDE;
 
 /**
  * Created by Andrey on 15.04.2018.
@@ -34,7 +30,7 @@ public class ColorPickerFragment extends Fragment implements ColorPickerContract
     private List<ColorSquare> mColorSquares;
 
     @BindView(R.id.color_picker)
-    ConstraintLayout mConstraintLayout;
+    LinearLayout mConstraintLayout;
 
     public static ColorPickerFragment newInstance() {
         return new ColorPickerFragment();
@@ -75,19 +71,14 @@ public class ColorPickerFragment extends Fragment implements ColorPickerContract
             int id = i + 1;
             colorSquare.setId(id);
 
-            ConstraintLayout.LayoutParams paramsNew =
-                    new ConstraintLayout.LayoutParams(SQUARE_SIDE, SQUARE_SIDE);
-            paramsNew.setMargins(SQUARE_MARGIN, SQUARE_MARGIN, SQUARE_MARGIN, SQUARE_MARGIN);
-
-            if (id != 1) {
-                paramsNew.startToEnd = id - 1;
-            }
-
-            colorSquare.setLayoutParams(paramsNew);
-
             float centerSquare = DEGREES_IN_CIRCLE * (i * 2 + 1) / (NUMBER_OF_SQUARES * 2);
             colorSquare.setBackgroundColor(Color.HSVToColor(new float[]{centerSquare, 1f, 1f}));
-            mConstraintLayout.addView(colorSquare, paramsNew);
+            mConstraintLayout.addView(colorSquare);
+
+            //constraintSet.connect(colorSquare.getId(), ConstraintSet.TOP,
+            //        R.id.color_picker, ConstraintSet.TOP, SQUARE_MARGIN);
+            //constraintSet.connect(colorSquare.getId(), ConstraintSet.BOTTOM,
+            //        R.id.color_picker, ConstraintSet.BOTTOM, SQUARE_MARGIN);
         }
     }
 

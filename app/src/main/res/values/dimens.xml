@@ -7,4 +7,5 @@
     <dimen name="fragment_horizontal_padding">16dp</dimen>
     <dimen name="sliderHeight">40dp</dimen>
     <dimen name="margin">16dp</dimen>
+    <dimen name="square_margin">50dp</dimen>
 </resources>
