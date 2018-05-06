@@ -1,6 +1,8 @@
 package ru.trubin23.tasksforschool.colorpicker;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
@@ -9,6 +11,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,6 +23,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.trubin23.tasksforschool.R;
+import ru.trubin23.tasksforschool.taskdetail.TaskDetailActivity;
 
 /**
  * Created by Andrey on 15.04.2018.
@@ -51,6 +57,8 @@ public class ColorPickerFragment extends Fragment implements ColorPickerContract
         View root = inflater.inflate(R.layout.colorpicker_frag, container, false);
         ButterKnife.bind(this, root);
 
+        setHasOptionsMenu(true);
+
         int[] colors = buildHueColorArray();
         GradientDrawable gradientDrawable = new GradientDrawable(
                 GradientDrawable.Orientation.LEFT_RIGHT,
@@ -79,6 +87,27 @@ public class ColorPickerFragment extends Fragment implements ColorPickerContract
 
         ColorDrawable drawable = (ColorDrawable) mSelectedColor.getBackground();
         outState.putInt(LAST_SELECTED_COLOR, drawable.getColor());
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.colorpicker_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_done:
+                Intent intent = new Intent();
+
+                ColorDrawable drawable = (ColorDrawable) mSelectedColor.getBackground();
+                intent.putExtra(ColorPickerActivity.TASK_COLOR, drawable.getColor());
+
+                getActivity().setResult(Activity.RESULT_OK, intent);
+                getActivity().finish();
+                return true;
+        }
+        return false;
     }
 
     private int[] buildHueColorArray() {

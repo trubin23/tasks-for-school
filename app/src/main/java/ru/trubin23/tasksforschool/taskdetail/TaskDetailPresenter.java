@@ -14,7 +14,7 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
     private Task mTask;
     private TaskDetailContract.View mView;
 
-    TaskDetailPresenter(@Nullable Task task, @NonNull TaskDetailContract.View view) {
+    TaskDetailPresenter(@NonNull TaskDetailContract.View view, @Nullable Task task) {
         mTask = task;
         mView = view;
         mView.setPresenter(this);

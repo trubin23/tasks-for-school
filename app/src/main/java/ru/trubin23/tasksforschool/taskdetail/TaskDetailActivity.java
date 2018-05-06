@@ -35,7 +35,7 @@ public class TaskDetailActivity extends AppCompatActivity {
 
         Task task = getIntent().getParcelableExtra(TASK_DETAILS);
 
-        new TaskDetailPresenter(task, fragment);
+        new TaskDetailPresenter(fragment, task);
     }
 
     @Override
