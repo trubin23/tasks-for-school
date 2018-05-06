@@ -1,17 +1,18 @@
 package ru.trubin23.tasksforschool.colorpicker;
 
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatImageView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,10 +28,11 @@ public class ColorPickerFragment extends Fragment implements ColorPickerContract
 
     private ColorPickerContract.Presenter mPresenter;
 
-    private List<ColorSquare> mColorSquares;
-
     @BindView(R.id.color_picker)
-    LinearLayout mConstraintLayout;
+    LinearLayout mColorPickerLayout;
+
+    @BindView(R.id.selected_color)
+    ImageView mSelectedColor;
 
     public static ColorPickerFragment newInstance() {
         return new ColorPickerFragment();
@@ -47,7 +49,7 @@ public class ColorPickerFragment extends Fragment implements ColorPickerContract
         GradientDrawable gradientDrawable = new GradientDrawable(
                 GradientDrawable.Orientation.LEFT_RIGHT,
                 colors);
-        mConstraintLayout.setBackground(gradientDrawable);
+        mColorPickerLayout.setBackground(gradientDrawable);
 
         addColorSquares();
 
@@ -68,18 +70,17 @@ public class ColorPickerFragment extends Fragment implements ColorPickerContract
         for (int i = 0; i < NUMBER_OF_SQUARES; i++) {
             ColorSquare colorSquare = new ColorSquare(getContext());
 
-            int id = i + 1;
-            colorSquare.setId(id);
-
             float centerSquare = DEGREES_IN_CIRCLE * (i * 2 + 1) / (NUMBER_OF_SQUARES * 2);
             colorSquare.setBackgroundColor(Color.HSVToColor(new float[]{centerSquare, 1f, 1f}));
-            mConstraintLayout.addView(colorSquare);
+            mColorPickerLayout.addView(colorSquare);
 
-            //constraintSet.connect(colorSquare.getId(), ConstraintSet.TOP,
-            //        R.id.color_picker, ConstraintSet.TOP, SQUARE_MARGIN);
-            //constraintSet.connect(colorSquare.getId(), ConstraintSet.BOTTOM,
-            //        R.id.color_picker, ConstraintSet.BOTTOM, SQUARE_MARGIN);
+            colorSquare.setOnClickListener(this::colorSelection);
         }
+    }
+
+    private void colorSelection(View view) {
+        ColorDrawable drawable = (ColorDrawable) view.getBackground();
+        mSelectedColor.setBackgroundColor(drawable.getColor());
     }
 
     @Override
