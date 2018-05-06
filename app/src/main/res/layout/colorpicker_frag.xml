@@ -35,6 +35,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/selected_color_size"
         android:layout_margin="@dimen/selected_color_margin"
+        android:src="@drawable/borders_of_selected_square"
         app:layout_constraintStart_toEndOf="@id/description_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/scroll_view" />
