@@ -23,7 +23,6 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.trubin23.tasksforschool.R;
-import ru.trubin23.tasksforschool.taskdetail.TaskDetailActivity;
 
 /**
  * Created by Andrey on 15.04.2018.
@@ -31,7 +30,9 @@ import ru.trubin23.tasksforschool.taskdetail.TaskDetailActivity;
 
 public class ColorPickerFragment extends Fragment implements ColorPickerContract.View {
 
+    public static final String TASK_COLOR = "task_color";
     private static final String LAST_SELECTED_COLOR = "last_selected_color";
+
     private static final int DEGREES_IN_CIRCLE = 360;
     private static final int NUMBER_OF_SQUARES = 16;
 
@@ -46,8 +47,19 @@ public class ColorPickerFragment extends Fragment implements ColorPickerContract
     @BindView(R.id.description_color)
     TextView mDescriptionColor;
 
-    public static ColorPickerFragment newInstance() {
-        return new ColorPickerFragment();
+    public static ColorPickerFragment newInstance(int color) {
+        ColorPickerFragment colorPickerFragment = new ColorPickerFragment();
+
+        Bundle args = new Bundle();
+        args.putInt(TASK_COLOR, color);
+        colorPickerFragment.setArguments(args);
+
+        return colorPickerFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Nullable
@@ -75,6 +87,12 @@ public class ColorPickerFragment extends Fragment implements ColorPickerContract
         super.onActivityCreated(savedInstanceState);
 
         int color = colorCalculation(0, NUMBER_OF_SQUARES);
+
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            color = bundle.getInt(TASK_COLOR, color);
+        }
+
         if (savedInstanceState != null) {
             color = savedInstanceState.getInt(LAST_SELECTED_COLOR, color);
         }
@@ -101,7 +119,7 @@ public class ColorPickerFragment extends Fragment implements ColorPickerContract
                 Intent intent = new Intent();
 
                 ColorDrawable drawable = (ColorDrawable) mSelectedColor.getBackground();
-                intent.putExtra(ColorPickerActivity.TASK_COLOR, drawable.getColor());
+                intent.putExtra(TASK_COLOR, drawable.getColor());
 
                 getActivity().setResult(Activity.RESULT_OK, intent);
                 getActivity().finish();

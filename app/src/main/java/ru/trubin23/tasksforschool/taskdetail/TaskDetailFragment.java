@@ -22,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.trubin23.tasksforschool.R;
 import ru.trubin23.tasksforschool.colorpicker.ColorPickerActivity;
+import ru.trubin23.tasksforschool.colorpicker.ColorPickerFragment;
 import ru.trubin23.tasksforschool.data.Task;
 
 /**
@@ -29,6 +30,8 @@ import ru.trubin23.tasksforschool.data.Task;
  */
 
 public class TaskDetailFragment extends Fragment implements TaskDetailContract.View {
+
+    private static final String SELECTED_COLOR = "selected_color";
 
     private TaskDetailContract.Presenter mPresenter;
 
@@ -76,7 +79,15 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_color_picker:
+                int color = Color.WHITE;
+                if (mTitle.getBackground() instanceof ColorDrawable) {
+                    ColorDrawable drawable = (ColorDrawable) mTitle.getBackground();
+                    color = drawable.getColor();
+                }
+
                 Intent intent = new Intent(getContext(), ColorPickerActivity.class);
+                intent.putExtra(ColorPickerFragment.TASK_COLOR, color);
+
                 startActivityForResult(intent, ColorPickerActivity.COLOR_SELECTION);
                 return true;
         }
@@ -89,9 +100,29 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
 
         int color = Color.WHITE;
         if (data != null) {
-            color = data.getIntExtra(ColorPickerActivity.TASK_COLOR, color);
+            color = data.getIntExtra(ColorPickerFragment.TASK_COLOR, color);
         }
         mPresenter.activityResult(requestCode, resultCode, color);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            int color = savedInstanceState.getInt(SELECTED_COLOR, Color.WHITE);
+            setColor(color);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (mTitle.getBackground() instanceof ColorDrawable) {
+            ColorDrawable drawable = (ColorDrawable) mTitle.getBackground();
+            outState.putInt(SELECTED_COLOR, drawable.getColor());
+        }
     }
 
     @Override

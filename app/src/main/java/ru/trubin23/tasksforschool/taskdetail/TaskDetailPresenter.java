@@ -56,6 +56,9 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
         }
 
         if (requestCode == ColorPickerActivity.COLOR_SELECTION) {
+            if (mTask != null) {
+                mTask.setColor(color);
+            }
             mView.setColor(color);
         }
     }
