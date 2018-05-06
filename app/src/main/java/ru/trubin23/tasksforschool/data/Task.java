@@ -16,9 +16,6 @@ import java.util.Random;
 
 public class Task implements Parcelable {
 
-    private static final int MIN_COLOR = 63;
-    private static final int RANGE_COLOR = 128;
-
     private static final DateFormat sDateFormat =
             new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
 
@@ -28,20 +25,17 @@ public class Task implements Parcelable {
 
     private String mDescription;
 
-    private final int mColor;
+    private int mColor;
 
     private final String mDateOfCreation;
 
-    public Task(@NonNull String title, @NonNull String description) {
+    public Task(@NonNull String title, @NonNull String description, int color) {
         Random random = new Random();
 
         mId = random.nextInt();
         mTitle = title;
         mDescription = description;
-        mColor = Color.rgb(
-                random.nextInt(RANGE_COLOR) + MIN_COLOR,
-                random.nextInt(RANGE_COLOR) + MIN_COLOR,
-                random.nextInt(RANGE_COLOR) + MIN_COLOR);
+        mColor = color;
         mDateOfCreation = sDateFormat.format(new Date());
     }
 
@@ -84,6 +78,10 @@ public class Task implements Parcelable {
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public void setColor(int color) {
+        mColor = color;
     }
 
     @Override

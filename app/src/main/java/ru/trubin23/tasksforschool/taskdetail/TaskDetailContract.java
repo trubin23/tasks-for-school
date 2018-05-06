@@ -1,6 +1,7 @@
 package ru.trubin23.tasksforschool.taskdetail;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import ru.trubin23.tasksforschool.BasePresenter;
 import ru.trubin23.tasksforschool.BaseView;
@@ -20,10 +21,14 @@ public interface TaskDetailContract {
         void showTaskList(@NonNull Task task);
 
         void showTitleError();
+
+        void setColor(int color);
     }
 
     interface Presenter extends BasePresenter {
 
-        void saveTask(@NonNull String text, @NonNull String text1);
+        void saveTask(@NonNull String title, @NonNull String description, int color);
+
+        void activityResult(int requestCode, int resultCode, int color);
     }
 }

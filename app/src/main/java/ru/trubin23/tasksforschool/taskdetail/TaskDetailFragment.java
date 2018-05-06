@@ -2,6 +2,8 @@ package ru.trubin23.tasksforschool.taskdetail;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -50,8 +52,11 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
         setHasOptionsMenu(true);
 
         FloatingActionButton fab = getActivity().findViewById(R.id.fab_save_task);
-        fab.setOnClickListener(view -> mPresenter.saveTask(
-                mTitle.getText().toString(), mDescription.getText().toString()));
+        fab.setOnClickListener(view -> {
+            ColorDrawable drawable = (ColorDrawable) mTitle.getBackground();
+            mPresenter.saveTask(mTitle.getText().toString(), mDescription.getText().toString(),
+                    drawable.getColor());
+        });
 
         return root;
     }
@@ -71,15 +76,22 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_color_picker:
-                colorPicker();
+                Intent intent = new Intent(getContext(), ColorPickerActivity.class);
+                startActivityForResult(intent, ColorPickerActivity.COLOR_SELECTION);
                 return true;
         }
         return false;
     }
 
-    private void colorPicker(){
-        Intent intent = new Intent(getContext(), ColorPickerActivity.class);
-        startActivityForResult(intent, ColorPickerActivity.COLOR_SELECTION);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        int color = Color.WHITE;
+        if (data != null) {
+            color = data.getIntExtra(ColorPickerActivity.TASK_COLOR, color);
+        }
+        mPresenter.activityResult(requestCode, resultCode, color);
     }
 
     @Override
@@ -95,6 +107,12 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     @Override
     public void setDescription(@NonNull String description) {
         mDescription.setText(description);
+    }
+
+    @Override
+    public void setColor(int color) {
+        mTitle.setBackgroundColor(color);
+        mDescription.setBackgroundColor(color);
     }
 
     @Override
