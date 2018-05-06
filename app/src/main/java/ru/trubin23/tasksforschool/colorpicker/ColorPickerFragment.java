@@ -1,5 +1,6 @@
 package ru.trubin23.tasksforschool.colorpicker;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
@@ -7,12 +8,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatImageView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +34,9 @@ public class ColorPickerFragment extends Fragment implements ColorPickerContract
 
     @BindView(R.id.selected_color)
     ImageView mSelectedColor;
+
+    @BindView(R.id.description_color)
+    TextView mDescriptionColor;
 
     public static ColorPickerFragment newInstance() {
         return new ColorPickerFragment();
@@ -74,21 +78,41 @@ public class ColorPickerFragment extends Fragment implements ColorPickerContract
 
         for (int i = 0; i < NUMBER_OF_SQUARES; i++) {
             ColorSquare colorSquare = new ColorSquare(getContext());
+            if (i == 0) {
+                colorSquare.callOnClick();
+            }
 
             int color = colorCalculation(i, NUMBER_OF_SQUARES);
             colorSquare.setBackgroundColor(color);
             mColorPickerLayout.addView(colorSquare);
 
-            colorSquare.setOnClickListener(this::colorSelection);
+            colorSquare.setOnClickListener(view -> {
+                ColorDrawable drawable = (ColorDrawable) view.getBackground();
+                colorSelection(drawable.getColor());
+            });
         }
 
         int color = colorCalculation(0, NUMBER_OF_SQUARES);
-        mSelectedColor.setBackgroundColor(color);
+        colorSelection(color);
     }
 
-    private void colorSelection(View view) {
-        ColorDrawable drawable = (ColorDrawable) view.getBackground();
-        mSelectedColor.setBackgroundColor(drawable.getColor());
+    private void colorSelection(int color) {
+        mSelectedColor.setBackgroundColor(color);
+
+        int red = Color.red(color);
+        int green = Color.green(color);
+        int blue = Color.blue(color);
+
+        float[] hsv = new float[3];
+        Color.RGBToHSV(red, green, blue, hsv);
+
+        @SuppressLint("DefaultLocale")
+        String descriptionText = String.format("HSV:  %.2f ; %.2f ; %.2f\n\n" +
+                        "RGB:  %d ; %d ; %d",
+                hsv[0], hsv[1], hsv[2],
+                red, green, blue);
+
+        mDescriptionColor.setText(descriptionText);
     }
 
     @Override

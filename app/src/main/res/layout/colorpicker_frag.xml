@@ -20,11 +20,22 @@
 
     </HorizontalScrollView>
 
-    <ImageView
-        android:id="@+id/selected_color"
-        android:layout_width="@dimen/selected_color_size"
+    <TextView
+        android:id="@+id/description_color"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/selected_color_size"
         android:layout_margin="@dimen/selected_color_margin"
+        android:textSize="@dimen/size_font_for_description_color"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scroll_view" />
+
+    <ImageView
+        android:id="@+id/selected_color"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/selected_color_size"
+        android:layout_margin="@dimen/selected_color_margin"
+        app:layout_constraintStart_toEndOf="@id/description_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/scroll_view" />
 
