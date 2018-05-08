@@ -24,6 +24,7 @@ import ru.trubin23.tasksforschool.R;
 import ru.trubin23.tasksforschool.colorpicker.ColorPickerActivity;
 import ru.trubin23.tasksforschool.colorpicker.ColorPickerFragment;
 import ru.trubin23.tasksforschool.data.Task;
+import ru.trubin23.tasksforschool.util.ColorUtils;
 
 /**
  * Created by Andrey on 30.03.2018.
@@ -56,9 +57,13 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
 
         FloatingActionButton fab = getActivity().findViewById(R.id.fab_save_task);
         fab.setOnClickListener(view -> {
-            ColorDrawable drawable = (ColorDrawable) mTitle.getBackground();
+            int color = Color.WHITE;
+            if (mTitle.getBackground() instanceof ColorDrawable) {
+                ColorDrawable drawable = (ColorDrawable) mTitle.getBackground();
+                color = drawable.getColor();
+            }
             mPresenter.saveTask(mTitle.getText().toString(), mDescription.getText().toString(),
-                    drawable.getColor());
+                    color);
         });
 
         return root;
@@ -144,6 +149,9 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     public void setColor(int color) {
         mTitle.setBackgroundColor(color);
         mDescription.setBackgroundColor(color);
+
+        mTitle.setTextColor(ColorUtils.colorText(color));
+        mDescription.setTextColor(ColorUtils.colorText(color));
     }
 
     @Override

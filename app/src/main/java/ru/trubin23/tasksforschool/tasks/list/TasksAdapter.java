@@ -14,6 +14,7 @@ import java.util.List;
 
 import ru.trubin23.tasksforschool.R;
 import ru.trubin23.tasksforschool.data.Task;
+import ru.trubin23.tasksforschool.util.ColorUtils;
 
 /**
  * Created by Andrey on 02.04.2018.
@@ -60,9 +61,11 @@ public class TasksAdapter extends BaseAdapter {
 
         TextView titleTV = rowView.findViewById(R.id.item_title);
         titleTV.setText(task.getTitle());
+        titleTV.setTextColor(ColorUtils.colorText(task.getColor()));
 
         TextView dateTV = rowView.findViewById(R.id.item_date);
         dateTV.setText(task.getDateOfCreation());
+        dateTV.setTextColor(ColorUtils.colorText(task.getColor()));
 
         rowView.setBackgroundColor(task.getColor());
 
